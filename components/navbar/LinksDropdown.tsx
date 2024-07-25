@@ -23,10 +23,17 @@ function LinksDropdown() {
       {/* Drop Down Content */}
       <DropdownMenuContent className="w-40" align="start" sideOffset={10}>
         {/* All the Items in the DropDown Menu are below */}
-        {links.map((link) => {
+        {links.map((link, index) => {
           return (
             <DropdownMenuItem key={link.href}>
-              <Link href={link.href}>{link.label}</Link>
+              <Link
+                href={link.href}
+                className={`capitalize w-full ${
+                  index % 2 === 0 ? "text-primary" : ""
+                }`}
+              >
+                {link.label}
+              </Link>
             </DropdownMenuItem>
           );
         })}
