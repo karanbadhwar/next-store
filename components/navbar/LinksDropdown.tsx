@@ -12,8 +12,11 @@ import {
   DropdownMenuSeparator,
 } from "../ui/dropdown-menu";
 import SignOutLink from "./SignOutLink";
+import { auth } from "@clerk/nextjs/server";
 
 function LinksDropdown() {
+  const { userId } = auth();
+  const isAdmin = userId === process.env.ADMIN_USER_ID;
   return (
     <DropdownMenu>
       {/* Trigger Component */}
@@ -42,7 +45,8 @@ function LinksDropdown() {
         </SignedOut>
         <SignedIn>
           {/* All the Items in the DropDown Menu are below */}
-          {links.map((link, index) => {
+          {links.map((link) => {
+            if (link.label === "dashboard" && !isAdmin) return null;
             return (
               <DropdownMenuItem key={link.href}>
                 <Link
